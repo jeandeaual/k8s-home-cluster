@@ -14,4 +14,4 @@ ansible.cfg
 configure
 LICENSE
 README.md
-Taskfile.yml
+Taskfile.yaml

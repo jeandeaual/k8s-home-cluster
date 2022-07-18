@@ -2,10 +2,14 @@
   "ansible.ansibleLint.arguments": "-c .github/linters/.ansible-lint",
   "files.associations": {
     "*.json5": "jsonc",
+    "**/provision/ansible/**/*.yaml": "ansible",
     "**/provision/ansible/**/*.yml": "ansible",
+    "**/provision/ansible/**/*.sops.yaml": "yaml",
     "**/provision/ansible/**/*.sops.yml": "yaml",
+    "**/provision/ansible/**/inventory/**/*.yaml": "yaml",
     "**/provision/ansible/**/inventory/**/*.yml": "yaml",
-    "*.yaml.j2": "yaml"
+    "*.yaml.j2": "yaml",
+    "*.yml.j2": "yaml"
   },
   "prettier.configPath": ".github/linters/.prettierrc.yaml",
   "prettier.ignorePath": ".github/linters/.prettierignore",

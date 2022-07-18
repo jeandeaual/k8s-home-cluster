@@ -1,4 +1,3 @@
----
 - block:
     - name: Copy 20auto-upgrades unattended-upgrades config
       ansible.builtin.blockinfile:

@@ -1,4 +1,3 @@
----
 - name: Add user to sudoers
   ansible.builtin.copy:
     content: "{{ ansible_user }} ALL=(ALL:ALL) NOPASSWD:ALL"

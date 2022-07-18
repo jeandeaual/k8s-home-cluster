@@ -64,18 +64,18 @@ main() {
         sops --encrypt --in-place "${PROJECT_DIR}/cluster/apps/networking/cloudflare-ddns/secret.sops.yaml"
         sops --encrypt --in-place "${PROJECT_DIR}/cluster/apps/networking/external-dns/secret.sops.yaml"
         # Generate Ansible settings
-        envsubst < "${PROJECT_DIR}/tmpl/ansible/kube-vip.yml" \
-            > "${PROJECT_DIR}/provision/ansible/inventory/group_vars/kubernetes/kube-vip.yml"
+        envsubst < "${PROJECT_DIR}/tmpl/ansible/kube-vip.yaml" \
+            > "${PROJECT_DIR}/provision/ansible/inventory/group_vars/kubernetes/kube-vip.yaml"
         # Include kube-vip if enabled
         if [[ ${BOOTSTRAP_KUBE_VIP_ENABLED} == "true" ]]; then
             if [[ $(yq eval --no-doc 'contains({"resources": ["kube-vip"]})' "${PROJECT_DIR}/cluster/apps/kube-system/kustomization.yaml") == false ]]; then
                 yq --inplace '.resources += [ "kube-vip" ]' "${PROJECT_DIR}/cluster/apps/kube-system/kustomization.yaml"
             fi
-            if [[ $(yq eval --no-doc 'contains({"k3s_server_manifests_templates": ["kube-vip-daemonset.yaml.j2"]})' "${PROJECT_DIR}/provision/ansible/inventory/group_vars/kubernetes/k3s.yml") == false ]]; then
-                yq --inplace '.k3s_server_manifests_templates += [ "kube-vip-daemonset.yaml.j2" ]' "${PROJECT_DIR}/provision/ansible/inventory/group_vars/kubernetes/k3s.yml"
+            if [[ $(yq eval --no-doc 'contains({"k3s_server_manifests_templates": ["kube-vip-daemonset.yaml.j2"]})' "${PROJECT_DIR}/provision/ansible/inventory/group_vars/kubernetes/k3s.yaml") == false ]]; then
+                yq --inplace '.k3s_server_manifests_templates += [ "kube-vip-daemonset.yaml.j2" ]' "${PROJECT_DIR}/provision/ansible/inventory/group_vars/kubernetes/k3s.yaml"
             fi
-            if [[ $(yq eval --no-doc 'contains({"k3s_server_manifests_urls": [{"url": "https://kube-vip.io/manifests/rbac.yaml", "filename": "kube-vip-rbac.yaml"}]})' "${PROJECT_DIR}/provision/ansible/inventory/group_vars/kubernetes/k3s.yml") == false ]]; then
-                yq --inplace '.k3s_server_manifests_urls += [{"url": "https://kube-vip.io/manifests/rbac.yaml", "filename": "kube-vip-rbac.yaml"}]' "${PROJECT_DIR}/provision/ansible/inventory/group_vars/kubernetes/k3s.yml"
+            if [[ $(yq eval --no-doc 'contains({"k3s_server_manifests_urls": [{"url": "https://kube-vip.io/manifests/rbac.yaml", "filename": "kube-vip-rbac.yaml"}]})' "${PROJECT_DIR}/provision/ansible/inventory/group_vars/kubernetes/k3s.yaml") == false ]]; then
+                yq --inplace '.k3s_server_manifests_urls += [{"url": "https://kube-vip.io/manifests/rbac.yaml", "filename": "kube-vip-rbac.yaml"}]' "${PROJECT_DIR}/provision/ansible/inventory/group_vars/kubernetes/k3s.yaml"
             fi
         fi
         # Generate ansible hosts file and secrets
@@ -427,8 +427,8 @@ generate_ansible_host_secrets() {
             printf "kind: Secret\n"
             printf "ansible_user: %s\n" "${!node_username}"
             printf "ansible_become_pass: %s\n" "${!node_password}"
-        } > "${PROJECT_DIR}/provision/ansible/inventory/host_vars/${node_hostname}.sops.yml"
-        sops --encrypt --in-place "${PROJECT_DIR}/provision/ansible/inventory/host_vars/${node_hostname}.sops.yml"
+        } > "${PROJECT_DIR}/provision/ansible/inventory/host_vars/${node_hostname}.sops.yaml"
+        sops --encrypt --in-place "${PROJECT_DIR}/provision/ansible/inventory/host_vars/${node_hostname}.sops.yaml"
     done
 }
 
@@ -437,7 +437,6 @@ generate_ansible_hosts() {
     default_control_node_prefix=${BOOTSTRAP_ANSIBLE_DEFAULT_CONTROL_NODE_HOSTNAME_PREFIX:-k8s-}
     default_worker_node_prefix=${BOOTSTRAP_ANSIBLE_DEFAULT_NODE_HOSTNAME_PREFIX:-k8s-}
     {
-        printf -- "---\n"
         printf "kubernetes:\n"
         printf "  children:\n"
         printf "    master:\n"
@@ -481,7 +480,7 @@ generate_ansible_hosts() {
                 fi
             done
         fi
-    } > "${PROJECT_DIR}/provision/ansible/inventory/hosts.yml"
+    } > "${PROJECT_DIR}/provision/ansible/inventory/hosts.yaml"
 }
 
 success() {

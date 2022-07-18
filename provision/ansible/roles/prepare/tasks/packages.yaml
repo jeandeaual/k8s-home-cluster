@@ -1,4 +1,3 @@
----
 - name: Upgrade all system packages
   ansible.builtin.apt:
     upgrade: full
