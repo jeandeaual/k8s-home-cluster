@@ -19,7 +19,7 @@
       - iputils-ping
       - ipvsadm
       - lvm2
-      - nano
+      - vim
       - net-tools
       - nfs-common
       - nvme-cli
@@ -32,13 +32,34 @@
       - unzip
     install_recommends: false
 
-- name: Install RasPi specific packages
+- name: Install Raspberry Pi specific packages (Ubuntu)
   ansible.builtin.apt:
     name:
       - linux-modules-extra-raspi
     install_recommends: false
   notify: Restart node
-  when: "'raspi' in ansible_kernel"
+  when: ansible_distribution == 'Ubuntu' and 'raspi' in ansible_kernel
+
+- name: Install Raspberry Pi specific packages (Raspberry Pi OS)
+  ansible.builtin.apt:
+    name:
+      # https://rancher.com/docs/k3s/latest/en/advanced/#enabling-legacy-iptables-on-raspberry-pi-os
+      - iptables
+      # rbd is not built into the Rasbperry Pi OS kerner, use nbd instead
+      - rbd-nbd
+    install_recommends: false
+  notify: Restart node
+  when:  ansible_distribution == 'Debian' and ansible_kernel.endswith('-v8+')
+
+# https://rancher.com/docs/k3s/latest/en/advanced/#enabling-legacy-iptables-on-raspberry-pi-os
+- name: Enable legacy iptables on Raspberry Pi OS
+  community.general.alternatives:
+    name: "{{ item }}"
+    path: /usr/sbin/{{ item }}-legacy
+  loop:
+    - iptables
+    - ip6tables
+  when:  ansible_distribution == 'Debian' and ansible_kernel.endswith('-v8+')
 
 - name: Restart node if necessary
   ansible.builtin.meta: flush_handlers

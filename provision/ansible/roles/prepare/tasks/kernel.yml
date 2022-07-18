@@ -6,14 +6,41 @@
   loop:
     - br_netfilter
     - overlay
-    - rbd
+    - "{{ rbd_module }}"
+  vars:
+    # rbd is not built into the Rasbperry Pi OS kerner, use nbd instead
+    rbd_module: >-
+      {{ 'nbd' if ansible_distribution == 'Debian' and ansible_kernel.endswith('-v8+')
+      else 'rbd' }}
 
 - name: Enable kernel modules on boot
   ansible.builtin.copy:
-    mode: 0644
+    mode: "644"
     content: "{{ item }}"
     dest: "/etc/modules-load.d/{{ item }}.conf"
   loop:
     - br_netfilter
     - overlay
-    - rbd
+    - "{{ rbd_module }}"
+  vars:
+    # rbd is not built into the Rasbperry Pi OS kerner, use nbd instead
+    rbd_module: >-
+      {{ 'nbd' if ansible_distribution == 'Debian' and ansible_kernel.endswith('-v8+')
+      else 'rbd' }}
+
+# https://rancher.com/docs/k3s/latest/en/advanced/#enabling-cgroups-for-raspberry-pi-os
+- name: Enable container features on Raspberry Pi
+  ansible.builtin.replace:
+    path: "{{ boot_cmdline_file }}"
+    regexp: ^([\w](?!.*\b{{ item }}\b).*)$
+    replace: \1 {{ item }}
+  loop:
+    - cgroup_memory=1
+    - cgroup_enable=memory
+  vars:
+    boot_cmdline_file: >-
+      {{ '/boot/firmware/cmdline.txt' if ansible_distribution == 'Ubuntu'
+      else '/boot/cmdline.txt' }}
+  when: >-
+    (ansible_distribution == 'Debian' and ansible_kernel.endswith('-v8+')) or
+    (ansible_distribution == 'Ubuntu' and 'raspi' in ansible_kernel)
