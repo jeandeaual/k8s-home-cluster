@@ -1,0 +1,16 @@
+{
+  "recommendations": [
+    "redhat.ansible",
+    "redhat.vscode-yaml",
+    "tamasfe.even-better-toml",
+    "esbenp.prettier-vscode",
+    "bierner.github-markdown-preview",
+    "eamodio.gitlens",
+    "usernamehw.errorlens",
+    "HashiCorp.terraform",
+    "mitchdenny.ecdc",
+    "ms-kubernetes-tools.vscode-kubernetes-tools",
+    "oderwat.indent-rainbow",
+    "signageos.signageos-vscode-sops"
+  ]
+}

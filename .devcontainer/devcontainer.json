@@ -1,0 +1,47 @@
+{
+  "name": "Ansible",
+
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": "..",
+    "args": {
+      "VARIANT": "3.10-bullseye",
+      "NODE_VERSION": "lts/*"
+    }
+  },
+
+  "settings": {
+    "python.defaultInterpreterPath": "/usr/local/bin/python",
+    "terminal.integrated.defaultProfile.linux": "bash"
+  },
+
+  "remoteUser": "vscode",
+
+  "remoteEnv": {
+    "PATH": "${containerEnv:PATH}:/home/vscode/.local/bin",
+    "POETRY_VIRTUALENVS_CREATE": "true",
+    "MOLECULE_GLOB": "molecule/*/molecule.yaml"
+  },
+
+  "mounts": [
+    "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind",
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.config/sops,target=/home/vscode/.config/sops,type=bind,consistency=cached"
+  ],
+
+  "postCreateCommand": "sudo chmod 666 /var/run/docker.sock && poetry install --no-root",
+
+  "extensions": [
+    "redhat.ansible",
+    "redhat.vscode-yaml",
+    "tamasfe.even-better-toml",
+    "esbenp.prettier-vscode",
+    "bierner.github-markdown-preview",
+    "eamodio.gitlens",
+    "usernamehw.errorlens",
+    "HashiCorp.terraform",
+    "mitchdenny.ecdc",
+    "ms-kubernetes-tools.vscode-kubernetes-tools",
+    "oderwat.indent-rainbow",
+    "signageos.signageos-vscode-sops"
+  ]
+}

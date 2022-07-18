@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "k8s-home-cluster"
+version = "1.0.0"
+description = ""
+authors = ["Alexis Jeandeau <alexis.jeandeau@gmail.com>"]
+license = "MIT"
+classifiers = ["Private :: Do Not Upload"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+ansible-core = "^2.13.1"
+
+[tool.poetry.group.dev.dependencies]
+molecule = {extras = ["docker"], version = "^4.0.0"}
+ansible-lint = "^6.3.0"
+yamllint = "^1.26.3"
+argcomplete = "^2.0.0"
+ansible-navigator = "^2.1.0"
+pre-commit = "^2.20.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
