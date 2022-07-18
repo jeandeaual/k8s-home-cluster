@@ -12,7 +12,3 @@ kubeconfig
 github-deploy-key*
 # Ansible
 xanmanning.k3s*
-# Terraform
-.terraform
-.terraform.tfstate*
-terraform.tfstate*

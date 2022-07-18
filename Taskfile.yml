@@ -6,7 +6,6 @@ vars:
     sh: "git rev-parse --show-toplevel"
   CLUSTER_DIR: "{{.PROJECT_DIR}}/cluster"
   ANSIBLE_DIR: "{{.PROJECT_DIR}}/provision/ansible"
-  TERRAFORM_DIR: "{{.PROJECT_DIR}}/provision/terraform"
 
 dotenv: [".config.env"]
 
@@ -17,7 +16,6 @@ includes:
   ansible: .taskfiles/AnsibleTasks.yml
   cluster: .taskfiles/ClusterTasks.yml
   precommit: .taskfiles/PrecommitTasks.yml
-  terraform: .taskfiles/TerraformTasks.yml
   sops: .taskfiles/SopsTasks.yml
 
 tasks:
@@ -47,7 +45,6 @@ tasks:
         prettier
         sops
         stern
-        terraform
         yamllint
         yq
 

@@ -63,12 +63,7 @@ main() {
         sops --encrypt --in-place "${PROJECT_DIR}/cluster/core/cluster-issuers/secret.sops.yaml"
         sops --encrypt --in-place "${PROJECT_DIR}/cluster/apps/networking/cloudflare-ddns/secret.sops.yaml"
         sops --encrypt --in-place "${PROJECT_DIR}/cluster/apps/networking/external-dns/secret.sops.yaml"
-        # Generate TerraForm secrets
-        envsubst < "${PROJECT_DIR}/tmpl/terraform/secret.sops.yaml" \
-            > "${PROJECT_DIR}/provision/terraform/cloudflare/secret.sops.yaml"
-        # Encrypt TerraForm secrets
-        sops --encrypt --in-place "${PROJECT_DIR}/provision/terraform/cloudflare/secret.sops.yaml"
-        # Generate ansible settings
+        # Generate Ansible settings
         envsubst < "${PROJECT_DIR}/tmpl/ansible/kube-vip.yml" \
             > "${PROJECT_DIR}/provision/ansible/inventory/group_vars/kubernetes/kube-vip.yml"
         # Include kube-vip if enabled
@@ -258,7 +253,6 @@ verify_binaries() {
     _has_binary "sops"
     _has_binary "ssh"
     _has_binary "task"
-    _has_binary "terraform"
 }
 
 verify_kubevip() {
