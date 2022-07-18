@@ -1,5 +1,4 @@
 {
-  "ansible.ansibleLint.arguments": "-c .github/linters/.ansible-lint",
   "files.associations": {
     "*.json5": "jsonc",
     "**/provision/ansible/**/*.yaml": "ansible",
@@ -11,8 +10,6 @@
     "*.yaml.j2": "yaml",
     "*.yml.j2": "yaml"
   },
-  "prettier.configPath": ".github/linters/.prettierrc.yaml",
-  "prettier.ignorePath": ".github/linters/.prettierignore",
   "yaml.schemas": {
     "Kubernetes": "cluster/*.yaml"
   },
