@@ -15,4 +15,3 @@ spec:
           name: error-pages
           port: 8080
   tls:
-    secretName: error-pages-tls

@@ -72,7 +72,6 @@ spec:
         enabled: true
         ingressClassName: traefik
         annotations:
-          cert-manager.io/cluster-issuer: letsencrypt-staging
           external-dns.alpha.kubernetes.io/target: ${SECRET_DOMAIN}
           external-dns/is-public: "true"
           hajimari.io/enable: "true"
@@ -87,7 +86,6 @@ spec:
         tls:
           - hosts:
               - *host
-            secretName: echo-server-tls
     resources:
       requests:
         cpu: 50m
