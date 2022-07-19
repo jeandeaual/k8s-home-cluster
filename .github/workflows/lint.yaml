@@ -1,14 +1,10 @@
 name: Lint
 
-on: # yamllint disable-line rule:truthy
-  workflow_dispatch:
+on:
   pull_request:
     branches:
       - master
-
-env:
-  # Currently no way to detect automatically
-  DEFAULT_BRANCH: main
+  workflow_dispatch:
 
 jobs:
   build:
@@ -23,8 +19,8 @@ jobs:
         uses: github/super-linter/slim@v4
         env:
           VALIDATE_ALL_CODEBASE: ${{ github.event_name == 'workflow_dispatch' }}
-          DEFAULT_BRANCH: "${{ env.DEFAULT_BRANCH }}"
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          DEFAULT_BRANCH: master
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ANSIBLE_CONFIG_FILE: .ansible-lint
           MARKDOWN_CONFIG_FILE: .markdownlint.yaml
           YAML_CONFIG_FILE: .yamllint.yaml
