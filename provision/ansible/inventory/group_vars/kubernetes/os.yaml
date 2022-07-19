@@ -1,5 +1,5 @@
 # (string) Timezone for the servers
-# timezone: "America/New_York"
+# timezone: Asia/Tokyo
 
 # (list) Additional ssh public keys to add to the nodes
 # ssh_authorized_keys:

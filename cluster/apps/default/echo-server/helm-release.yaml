@@ -70,15 +70,15 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: "traefik"
+        ingressClassName: traefik
         annotations:
-          cert-manager.io/cluster-issuer: "letsencrypt-staging"
-          external-dns.alpha.kubernetes.io/target: "${SECRET_DOMAIN}"
+          cert-manager.io/cluster-issuer: letsencrypt-staging
+          external-dns.alpha.kubernetes.io/target: ${SECRET_DOMAIN}
           external-dns/is-public: "true"
           hajimari.io/enable: "true"
-          hajimari.io/icon: "video-input-antenna"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          traefik.ingress.kubernetes.io/router.middlewares: "networking-cloudflare-only@kubernetescrd"
+          hajimari.io/icon: video-input-antenna
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+          traefik.ingress.kubernetes.io/router.middlewares: networking-cloudflare-only@kubernetescrd
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
@@ -87,7 +87,7 @@ spec:
         tls:
           - hosts:
               - *host
-            secretName: "echo-server-tls"
+            secretName: echo-server-tls
     resources:
       requests:
         cpu: 50m

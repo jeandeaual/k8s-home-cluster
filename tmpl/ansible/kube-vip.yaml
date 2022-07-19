@@ -1,2 +1,2 @@
 # (string) The ARP address kube-vip broadcasts
-kubevip_address: "${BOOTSTRAP_KUBE_VIP_ADDR}"
+kubevip_address: ${BOOTSTRAP_KUBE_VIP_ADDR}

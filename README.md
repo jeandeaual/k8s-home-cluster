@@ -101,7 +101,7 @@ The `.config.env` file contains necessary configuration that is needed by Ansibl
     task configure
     ```
 
-### ⚡ Preparing Ubuntu with Ansible
+### ⚡ Preparing the host OS with Ansible
 
 1. Ensure you are able to SSH into your nodes using a private SSH key **without a passphrase**.
 
@@ -123,7 +123,7 @@ The `.config.env` file contains necessary configuration that is needed by Ansibl
     task ansible:ping
     ```
 
-5. Run the Ubuntu Prepare Ansible playbook:
+5. Run the Prepare Ansible playbook:
 
     ```sh
     task ansible:prepare

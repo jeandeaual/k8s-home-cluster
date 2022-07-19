@@ -42,10 +42,10 @@ spec:
     policy: sync
     sources:
       - ingress
-    txtPrefix: "k8s."
-    txtOwnerId: "default"
+    txtPrefix: k8s.
+    txtOwnerId: default
     domainFilters:
-      - "${SECRET_DOMAIN}"
+      - ${SECRET_DOMAIN}
     resources:
       requests:
         memory: 100Mi

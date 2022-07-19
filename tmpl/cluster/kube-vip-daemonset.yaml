@@ -45,7 +45,7 @@ spec:
             - name: vip_retryperiod
               value: "2"
             - name: address
-              value: "${BOOTSTRAP_KUBE_VIP_ADDR}"
+              value: ${BOOTSTRAP_KUBE_VIP_ADDR}
           securityContext:
             capabilities:
               add:
